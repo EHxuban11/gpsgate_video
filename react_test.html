@@ -9,17 +9,99 @@
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
     <!-- Babel for JSX support -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Some basic styling -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        #root {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #e0e0e0;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        // Your React code here
+        // Main App component
         function App() {
             return (
                 <div>
-                    <h1>Hello, React with CDN!</h1>
-                    <p>This is a simple React component using CDN.</p>
+                    <h1>React with CDN Example</h1>
+                    <Counter />
+                    <TodoList />
+                </div>
+            );
+        }
+
+        // Counter component using React hooks
+        function Counter() {
+            const [count, setCount] = React.useState(0);
+
+            return (
+                <div>
+                    <h2>Counter</h2>
+                    <p>Current Count: {count}</p>
+                    <button onClick={() => setCount(count + 1)}>Increment</button>
+                    <button onClick={() => setCount(count - 1)}>Decrement</button>
+                </div>
+            );
+        }
+
+        // TodoList component
+        function TodoList() {
+            const [todos, setTodos] = React.useState([]);
+            const [inputValue, setInputValue] = React.useState('');
+
+            const addTodo = () => {
+                if (inputValue.trim() !== '') {
+                    setTodos([...todos, inputValue]);
+                    setInputValue('');
+                }
+            };
+
+            return (
+                <div>
+                    <h2>Todo List</h2>
+                    <input
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        placeholder="Enter a todo"
+                    />
+                    <button onClick={addTodo}>Add Todo</button>
+                    <ul>
+                        {todos.map((todo, index) => (
+                            <li key={index}>{todo}</li>
+                        ))}
+                    </ul>
                 </div>
             );
         }
